@@ -504,17 +504,25 @@ if(SR){
 
 rec.onresult = e => {
     const target = list[idx].word.toLowerCase();
+    
+    // Get raw transcript
     let rawHeard = e.results[0][0].transcript.trim().toLowerCase();
+    
+    // NEW: Strip punctuation (dots, commas, question marks, etc.)
+    // This removes that pesky "." at the end of "pure."
+    rawHeard = rawHeard.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
     
     // Check for bad words immediately
     const censoredResult = censor(rawHeard);
     let heard = censoredResult.text;
     let match = false;
 
-    // If the input was dirty, we force 'match' to false so they don't get a reward
+    // If the input was dirty, we force 'match' to false
     if (!censoredResult.dirty) {
       for (let i = 0; i < e.results[0].length; i++) {
-        const t = e.results[0][i].transcript.trim().toLowerCase();
+        // Clean each alternative result as well
+        let t = e.results[0][i].transcript.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+        
         const ws = t.split(/\s+/);
         if (t === target || ws.includes(target)) {
           match = true;
@@ -523,13 +531,12 @@ rec.onresult = e => {
         }
       }
     } else {
-      // If it was dirty, the parrot gives a specific reaction
       heard = "Squawk! 🦜"; 
     }
 
     reveal(heard, match);
     micOff();
-  };
+};
 
   rec.onerror=e=>{
     const msg=e.error==="no-speech"?"(silence)":"(error — try again)";
