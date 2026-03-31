@@ -9,325 +9,139 @@
 
 body{
   font-family:"Segoe UI",system-ui,sans-serif;
-  background:#0a0a1a;
-  color:#fffffe;
-  height:100vh;
-  overflow:hidden;
+  background:#0a0a1a;color:#fffffe;
+  height:100vh;overflow:hidden;
 }
 
 /* ========== BACKGROUND ========== */
-.bg{
-  position:fixed;inset:0;z-index:0;
-  background:linear-gradient(140deg,#0a0a1a 0%,#151030 40%,#0d1b2a 70%,#0a0a1a 100%);
-}
-
-.orb{
-  position:fixed;
-  border-radius:50%;
-  filter:blur(90px);
-  pointer-events:none;
-  z-index:1;
-  animation:drift 22s ease-in-out infinite alternate;
-}
-
+.bg{position:fixed;inset:0;z-index:0;background:linear-gradient(140deg,#0a0a1a 0%,#151030 40%,#0d1b2a 70%,#0a0a1a 100%)}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:1;animation:drift 22s ease-in-out infinite alternate}
 .orb-1{width:420px;height:420px;top:-8%;left:-5%;background:#e94560;opacity:.07;animation-duration:22s}
 .orb-2{width:350px;height:350px;top:60%;right:-6%;background:#4361ee;opacity:.06;animation-duration:28s;animation-delay:-5s}
 .orb-3{width:300px;height:300px;bottom:-5%;left:30%;background:#2ec4b6;opacity:.05;animation-duration:25s;animation-delay:-10s}
 .orb-4{width:280px;height:280px;top:15%;right:25%;background:#ff7b00;opacity:.04;animation-duration:30s;animation-delay:-8s}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-60px) scale(1.12)}66%{transform:translate(-30px,40px) scale(.93)}100%{transform:translate(15px,-25px) scale(1.06)}}
 
-@keyframes drift{
-  0%{transform:translate(0,0) scale(1)}
-  33%{transform:translate(40px,-60px) scale(1.12)}
-  66%{transform:translate(-30px,40px) scale(.93)}
-  100%{transform:translate(15px,-25px) scale(1.06)}
-}
-
-/* floating motes */
 .motes{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.mote{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.25);animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) scale(1);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100vh) scale(.3);opacity:0}}
 
-.mote{
-  position:absolute;
-  width:3px;height:3px;
-  border-radius:50%;
-  background:rgba(255,255,255,.25);
-  animation:rise linear infinite;
-}
-
-@keyframes rise{
-  0%{transform:translateY(0) scale(1);opacity:0}
-  10%{opacity:1}
-  90%{opacity:1}
-  100%{transform:translateY(-100vh) scale(.3);opacity:0}
-}
-
-/* ========== SETUP SCREEN ========== */
-.setup{
-  position:fixed;inset:0;z-index:200;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  background:rgba(10,10,26,.97);
-  backdrop-filter:blur(20px);
-  transition:opacity .5s,visibility .5s;
-}
+/* ========== SETUP ========== */
+.setup{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(10,10,26,.97);backdrop-filter:blur(20px);transition:opacity .5s,visibility .5s}
 .setup.gone{opacity:0;visibility:hidden;pointer-events:none}
-
-.setup-parrot{
-  font-size:5.5rem;
-  animation:bob 2.5s ease-in-out infinite;
-  filter:drop-shadow(0 0 30px rgba(46,196,182,.3));
-}
+.setup-parrot{font-size:5.5rem;animation:bob 2.5s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(46,196,182,.3))}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-
-.setup h1{
-  font-size:2.4rem;font-weight:800;
-  margin:.8rem 0 .3rem;
-  background:linear-gradient(135deg,#fffffe 30%,#2ec4b6);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-
+.setup h1{font-size:2.4rem;font-weight:800;margin:.8rem 0 .3rem;background:linear-gradient(135deg,#fffffe 30%,#2ec4b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .setup .sub{opacity:.45;font-size:1.1rem;margin-bottom:2rem}
-
-.enable-btn{
-  padding:1rem 2.8rem;
-  font-size:1.25rem;font-weight:700;
-  border:none;border-radius:.9rem;
-  background:linear-gradient(135deg,#2ec4b6,#1a936f);
-  color:#fff;cursor:pointer;
-  transition:transform .2s,box-shadow .2s;
-  font-family:inherit;
-  box-shadow:0 4px 25px rgba(46,196,182,.3);
-}
+.enable-btn{padding:1rem 2.8rem;font-size:1.25rem;font-weight:700;border:none;border-radius:.9rem;background:linear-gradient(135deg,#2ec4b6,#1a936f);color:#fff;cursor:pointer;transition:transform .2s,box-shadow .2s;font-family:inherit;box-shadow:0 4px 25px rgba(46,196,182,.3)}
 .enable-btn:hover{transform:scale(1.05);box-shadow:0 6px 35px rgba(46,196,182,.4)}
-
-.setup .err{
-  color:#e94560;margin-top:1rem;
-  font-weight:600;font-size:.95rem;
-  opacity:0;transition:opacity .3s;
-}
+.setup .err{color:#e94560;margin-top:1rem;font-weight:600;font-size:.95rem;opacity:0;transition:opacity .3s}
 .setup .err.show{opacity:1}
-
-.tip-box{
-  margin-top:2.5rem;
-  padding:1rem 1.6rem;
-  border-radius:.7rem;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.06);
-  max-width:520px;text-align:center;
-  font-size:.82rem;line-height:1.7;opacity:.35;
-}
+.tip-box{margin-top:2.5rem;padding:1rem 1.6rem;border-radius:.7rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);max-width:520px;text-align:center;font-size:.82rem;line-height:1.7;opacity:.35}
 .tip-box strong{opacity:1}
 
-/* ========== MAIN APP ========== */
-.app{
-  position:relative;z-index:10;
-  height:100vh;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:space-between;
-  padding:1.6rem 2rem 1rem;
-}
+/* ========== APP ========== */
+.app{position:relative;z-index:10;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:1.6rem 2rem 1rem}
 
-/* --- header --- */
 .head{text-align:center}
+.head h1{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.head h1 .p-icon{font-size:2rem;filter:drop-shadow(0 0 8px rgba(46,196,182,.4));transition:filter .3s}
 
-.head h1{
-  font-size:1.6rem;font-weight:800;
-  letter-spacing:-.02em;
-  display:flex;align-items:center;
-  justify-content:center;gap:.5rem;
-}
-.head h1 .p-icon{
-  font-size:2rem;
-  filter:drop-shadow(0 0 8px rgba(46,196,182,.4));
-}
+/* parrot icon glows when speaking */
+.head h1 .p-icon.talking{filter:drop-shadow(0 0 16px rgba(46,196,182,.8));animation:talk-bob .4s ease infinite alternate}
+@keyframes talk-bob{0%{transform:scale(1) rotate(-3deg)}100%{transform:scale(1.12) rotate(3deg)}}
 
-.dot{
-  display:inline-block;width:9px;height:9px;
-  border-radius:50%;background:#e94560;
-  margin-left:.1rem;vertical-align:middle;
-  transition:background .3s;
-  box-shadow:0 0 6px rgba(233,69,96,.5);
-}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#e94560;margin-left:.1rem;vertical-align:middle;transition:background .3s;box-shadow:0 0 6px rgba(233,69,96,.5)}
 .dot.ok{background:#2ec4b6;box-shadow:0 0 6px rgba(46,196,182,.5)}
 
-.filters{
-  display:flex;gap:.4rem;margin-top:.65rem;
-  justify-content:center;flex-wrap:wrap;
-}
-
-.ff{
-  padding:.28rem .95rem;
-  border-radius:1.4rem;
-  border:2px solid;
-  background:transparent;
-  font-size:.82rem;font-weight:700;
-  cursor:pointer;transition:all .2s;
-  font-family:inherit;
-}
-
+.filters{display:flex;gap:.4rem;margin-top:.65rem;justify-content:center;flex-wrap:wrap}
+.ff{padding:.28rem .95rem;border-radius:1.4rem;border:2px solid;background:transparent;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit}
 .ff-all{border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.45)}
 .ff-ear{border-color:#e94560;color:#e94560}
 .ff-air{border-color:#4361ee;color:#4361ee}
 .ff-ure{border-color:#2ec4b6;color:#2ec4b6}
 .ff-er{border-color:#ff7b00;color:#ff7b00}
-
 .ff.on{color:#0a0a1a !important}
 .ff-all.on{background:rgba(255,255,255,.85)}
 .ff-ear.on{background:#e94560}
 .ff-air.on{background:#4361ee}
 .ff-ure.on{background:#2ec4b6}
 .ff-er.on{background:#ff7b00}
-
 .ff:hover{filter:brightness(1.2)}
 
-/* --- centre --- */
-.centre{
-  flex:1;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:.25rem;text-align:center;
-}
+.centre{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25rem;text-align:center}
 
-.badge{
-  display:inline-block;
-  padding:.3rem 1.3rem;
-  border-radius:2rem;
-  font-size:1.15rem;font-weight:700;
-  transition:all .3s;
-}
+.badge{display:inline-block;padding:.3rem 1.3rem;border-radius:2rem;font-size:1.15rem;font-weight:700;transition:all .3s}
 .b-ear{background:rgba(233,69,96,.12);color:#e94560;border:1px solid rgba(233,69,96,.2)}
 .b-air{background:rgba(67,97,238,.12);color:#4361ee;border:1px solid rgba(67,97,238,.2)}
 .b-ure{background:rgba(46,196,182,.12);color:#2ec4b6;border:1px solid rgba(46,196,182,.2)}
 .b-er{background:rgba(255,123,0,.12);color:#ff7b00;border:1px solid rgba(255,123,0,.2)}
 
-.lbl{
-  font-size:.95rem;text-transform:uppercase;
-  letter-spacing:.14em;font-weight:600;
-  opacity:.3;margin-top:.5rem;
-}
-
-.word{
-  font-size:7.5rem;font-weight:900;
-  line-height:1.05;letter-spacing:-.03em;
-  transition:color .3s;
-  text-shadow:0 0 40px rgba(255,255,255,.04);
-}
+.lbl{font-size:.95rem;text-transform:uppercase;letter-spacing:.14em;font-weight:600;opacity:.3;margin-top:.5rem}
+.word{font-size:7.5rem;font-weight:900;line-height:1.05;letter-spacing:-.03em;transition:color .3s;text-shadow:0 0 40px rgba(255,255,255,.04)}
 .w-ear{color:#e94560}.w-air{color:#4361ee}.w-ure{color:#2ec4b6}.w-er{color:#ff7b00}
 
-/* --- mic button --- */
-.mic{
-  width:100px;height:100px;
-  border-radius:50%;
-  border:3px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.03);
-  color:#fffffe;cursor:pointer;
-  transition:all .25s;
-  display:flex;align-items:center;justify-content:center;
-  margin:.7rem 0 .15rem;
-  position:relative;
-}
-.mic:hover{
-  border-color:rgba(255,255,255,.25);
-  background:rgba(255,255,255,.06);
-  transform:scale(1.06);
-}
-
+/* ========== MIC BUTTON ========== */
+.mic{width:100px;height:100px;border-radius:50%;border:3px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:#fffffe;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;margin:.7rem 0 .15rem;position:relative}
+.mic:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.06);transform:scale(1.06)}
 .mic-emoji{font-size:2.4rem;transition:opacity .2s}
-
-.mic.on{
-  border-color:#e94560;
-  background:rgba(233,69,96,.08);
-  animation:glow 1.6s ease infinite;
-}
+.mic.on{border-color:#e94560;background:rgba(233,69,96,.08);animation:glow 1.6s ease infinite}
 .mic.on .mic-emoji{opacity:0;position:absolute}
 .mic.on .waves{display:flex}
+.mic.off{opacity:.25;pointer-events:none;transform:scale(.95)}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(233,69,96,.35)}50%{box-shadow:0 0 0 18px rgba(233,69,96,0)}}
 
-@keyframes glow{
-  0%,100%{box-shadow:0 0 0 0 rgba(233,69,96,.35)}
-  50%{box-shadow:0 0 0 18px rgba(233,69,96,0)}
-}
-
-/* sound wave bars */
-.waves{
-  display:none;
-  gap:4px;align-items:center;height:36px;
-}
-.waves span{
-  width:4px;border-radius:2px;
-  background:#e94560;
-  animation:bar .9s ease-in-out infinite;
-}
+.waves{display:none;gap:4px;align-items:center;height:36px}
+.waves span{width:4px;border-radius:2px;background:#e94560;animation:bar .9s ease-in-out infinite}
 .waves span:nth-child(1){animation-delay:0s}
 .waves span:nth-child(2){animation-delay:.12s}
 .waves span:nth-child(3){animation-delay:.24s}
 .waves span:nth-child(4){animation-delay:.36s}
 .waves span:nth-child(5){animation-delay:.48s}
+@keyframes bar{0%,100%{height:8px;opacity:.4}50%{height:32px;opacity:1}}
 
-@keyframes bar{
-  0%,100%{height:8px;opacity:.4}
-  50%{height:32px;opacity:1}
-}
-
-/* --- result area --- */
-.res{
-  min-height:9.5rem;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-}
-
-.res-lbl{
-  font-size:.85rem;text-transform:uppercase;
-  letter-spacing:.13em;font-weight:600;
-  opacity:0;transition:opacity .3s;
-  display:flex;align-items:center;gap:.4rem;
-}
+/* ========== RESULT ========== */
+.res{min-height:9.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.res-lbl{font-size:.85rem;text-transform:uppercase;letter-spacing:.13em;font-weight:600;opacity:0;transition:opacity .3s;display:flex;align-items:center;gap:.4rem}
 .res-lbl.show{opacity:.4}
 .res-lbl .parrot-sm{font-size:1.2rem}
+.res-word{font-size:4.5rem;font-weight:800;min-height:5.5rem;display:flex;align-items:center;transition:color .3s}
 
-.res-word{
-  font-size:4.5rem;font-weight:800;
-  min-height:5.5rem;
-  display:flex;align-items:center;
-  transition:color .3s;
-}
-
-.verdict{
-  font-size:1.3rem;font-weight:700;
-  padding:.35rem 1.4rem;
-  border-radius:.8rem;
-  margin-top:.25rem;
-  opacity:0;transition:opacity .3s;
-}
+.verdict{font-size:1.3rem;font-weight:700;padding:.35rem 1.4rem;border-radius:.8rem;margin-top:.25rem;opacity:0;transition:opacity .3s}
 .verdict.show{opacity:1}
 .verdict.yes{background:rgba(46,196,182,.1);color:#2ec4b6;border:1px solid rgba(46,196,182,.15)}
 .verdict.no{background:rgba(233,69,96,.1);color:#e94560;border:1px solid rgba(233,69,96,.15)}
 
-/* --- controls --- */
+/* ========== PARROT VOICE INDICATOR ========== */
+.pv{
+  display:flex;align-items:center;justify-content:center;
+  gap:.45rem;margin-top:.35rem;
+  font-size:1rem;font-weight:600;
+  color:rgba(46,196,182,.7);
+  opacity:0;transition:opacity .3s;
+  height:1.6rem;
+}
+.pv.on{opacity:1}
+.pv .pv-icon{animation:talk-bob .35s ease infinite alternate}
+.pv .pv-bars{display:flex;gap:3px;align-items:center;height:16px}
+.pv .pv-bars span{
+  width:3px;border-radius:1.5px;background:#2ec4b6;
+  animation:pv-bar .6s ease-in-out infinite;
+}
+.pv .pv-bars span:nth-child(1){animation-delay:0s}
+.pv .pv-bars span:nth-child(2){animation-delay:.1s}
+.pv .pv-bars span:nth-child(3){animation-delay:.2s}
+.pv .pv-bars span:nth-child(4){animation-delay:.3s}
+@keyframes pv-bar{0%,100%{height:4px;opacity:.4}50%{height:14px;opacity:1}}
+
+/* ========== CONTROLS ========== */
 .nav{display:flex;align-items:center;gap:1rem}
-
-.btn{
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.08);
-  color:#fffffe;
-  padding:.5rem 1.3rem;
-  border-radius:.5rem;
-  font-size:.9rem;font-weight:600;
-  cursor:pointer;transition:all .2s;
-  font-family:inherit;
-}
+.btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#fffffe;padding:.5rem 1.3rem;border-radius:.5rem;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
 .btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15)}
+.ctr{font-size:.9rem;opacity:.3;font-weight:600;min-width:4.5rem;text-align:center}
 
-.ctr{
-  font-size:.9rem;opacity:.3;font-weight:600;
-  min-width:4.5rem;text-align:center;
-}
-
-.keys{
-  position:fixed;bottom:.5rem;right:1rem;
-  font-size:.65rem;opacity:.14;z-index:10;
-}
-.keys kbd{
-  background:rgba(255,255,255,.1);
-  padding:.08rem .3rem;border-radius:.2rem;
-}
+.keys{position:fixed;bottom:.5rem;right:1rem;font-size:.65rem;opacity:.14;z-index:10}
+.keys kbd{background:rgba(255,255,255,.1);padding:.08rem .3rem;border-radius:.2rem}
 
 /* ========== ANIMATIONS ========== */
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
@@ -335,35 +149,17 @@ body{
 .shake{animation:shake .35s ease}
 .pop{animation:pop .4s ease}
 
-/* confetti */
-.particle{
-  position:fixed;
-  font-size:1.6rem;
-  pointer-events:none;z-index:60;
-  animation:burst 1.3s ease-out forwards;
-}
-
+.particle{position:fixed;font-size:1.6rem;pointer-events:none;z-index:60;animation:burst 1.3s ease-out forwards}
 @keyframes burst{
   0%{opacity:1;transform:translate(0,0) scale(0) rotate(0)}
   40%{opacity:1;transform:translate(var(--x),var(--y1)) scale(1.3) rotate(var(--r))}
   100%{opacity:0;transform:translate(var(--x),var(--y2)) scale(.4) rotate(var(--r))}
 }
 
-/* screen flash on correct */
-.flash{
-  position:fixed;inset:0;z-index:55;
-  pointer-events:none;
-  opacity:0;transition:opacity .15s;
-}
+.flash{position:fixed;inset:0;z-index:55;pointer-events:none;opacity:0;transition:opacity .15s}
 .flash.go{opacity:1;transition:opacity 0s}
 
-/* ========== NO SUPPORT ========== */
-.nope{
-  position:fixed;inset:0;z-index:300;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  background:#0a0a1a;text-align:center;padding:3rem;
-}
+.nope{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0a0a1a;text-align:center;padding:3rem}
 .nope h2{color:#e94560;font-size:1.8rem;margin-bottom:.6rem}
 .nope p{opacity:.4;font-size:1.1rem}
 </style>
@@ -371,21 +167,16 @@ body{
 
 <body>
 
-<!-- ===== BACKGROUND ===== -->
 <div class="bg"></div>
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 <div class="orb orb-3"></div>
 <div class="orb orb-4"></div>
 <div class="motes" id="motes"></div>
-
-<!-- green flash overlay -->
 <div class="flash" id="flash" style="background:radial-gradient(circle,rgba(46,196,182,.08),transparent 70%)"></div>
-
-<!-- confetti container -->
 <div id="confetti"></div>
 
-<!-- ===== SETUP SCREEN ===== -->
+<!-- ===== SETUP ===== -->
 <div class="setup" id="setup">
   <div class="setup-parrot">🦜</div>
   <h1>Phonics Parrot</h1>
@@ -396,19 +187,19 @@ body{
     <strong>To keep it enabled permanently:</strong><br>
     Click the 🔒 icon in Chrome's address bar →
     Site settings → Microphone → <strong>Allow</strong><br><br>
-    Or run a local server and access via <strong>localhost</strong>:<br>
+    Or host locally:
     <code style="opacity:.7">python -m http.server 8000</code>
-    &nbsp;→&nbsp;
+    →
     <code style="opacity:.7">localhost:8000/parrot.html</code>
   </div>
 </div>
 
-<!-- ===== MAIN APP ===== -->
+<!-- ===== APP ===== -->
 <div class="app" id="app">
 
   <div class="head">
     <h1>
-      <span class="p-icon">🦜</span>
+      <span class="p-icon" id="pIcon">🦜</span>
       Phonics Parrot
       <span class="dot" id="dot"></span>
     </h1>
@@ -433,6 +224,11 @@ body{
       </div>
       <div class="res-word" id="resWord"></div>
       <div class="verdict" id="verdict"></div>
+      <div class="pv" id="pv">
+        <span class="pv-icon">🦜</span>
+        <div class="pv-bars"><span></span><span></span><span></span><span></span></div>
+        <span>speaking…</span>
+      </div>
     </div>
   </div>
 
@@ -448,43 +244,64 @@ body{
 <div class="keys">
   <kbd>Space</kbd> listen &nbsp;
   <kbd>←</kbd><kbd>→</kbd> navigate &nbsp;
-  <kbd>S</kbd> shuffle
+  <kbd>S</kbd> shuffle &nbsp;
+  <kbd>R</kbd> repeat
 </div>
 
-<!-- ================================================ -->
 <script>
-/* ============================================
-   WORD BANK — edit here to add/remove words
-   ============================================ */
-const BANK = {
-  ear: { ipa:"/ɪə/  (ear)", words:["clear","here","year","years","near","dear","cheer","fear"] },
-  air: { ipa:"/eə/  (air)", words:["air","there","where","somewhere","care","share","fair","bare"] },
-  ure: { ipa:"/ʊə/  (ure)", words:["sure","pure","cure","tour","poor"] },
-  er:  { ipa:"/3:/  (er)",  words:["bird","earth","learn","first","stir","word","turn"] }
+/* ================================================
+   WORD BANK
+   ================================================ */
+const BANK={
+  ear:{ipa:"/ɪə/  (ear)",words:["clear","here","year","years","near","dear","cheer","fear"]},
+  air:{ipa:"/eə/  (air)",words:["air","there","where","somewhere","care","share","fair","bare"]},
+  ure:{ipa:"/ʊə/  (ure)",words:["sure","pure","cure","tour","poor"]},
+  er: {ipa:"/3:/  (er)", words:["bird","earth","learn","first","stir","word","turn"]}
 };
 
-/* ---- flat list ---- */
-let all=[], list=[], idx=0;
+let all=[],list=[],idx=0;
 for(const[cat,d]of Object.entries(BANK))
   for(const w of d.words) all.push({word:w,cat,ipa:d.ipa});
 list=[...all];
 
-/* ---- elements ---- */
-const $=id=>document.getElementById(id);
-const elWord    = $("word");
-const elBadge   = $("badge");
-const elCtr     = $("ctr");
-const elResLbl  = $("resLbl");
-const elResWord = $("resWord");
-const elVerdict = $("verdict");
-const elMic     = $("mic");
-const elDot     = $("dot");
-const elFlash   = $("flash");
+/* ================================================
+   CENSORSHIP SYSTEM
+   ================================================ */
+// Add any words you want to block to this list
+const SHHH = [
+  "fuck", "shit", "piss", "cunt", "bitch", "asshole", 
+  "dick", "pussy", "bastard", "nigger", "faggot"
+];
 
-/* ========================================
-   BACKGROUND MOTES (floating particles)
-   ======================================== */
-(function makeMotes(){
+function censor(text) {
+  let cleaned = text.toLowerCase();
+  let wasDirty = false;
+
+  SHHH.forEach(badWord => {
+    // This regex looks for the word exactly (so "assessment" isn't blocked because of "ass")
+    const regex = new RegExp(`\\b${badWord}\\b`, 'gi');
+    if (regex.test(cleaned)) {
+      cleaned = cleaned.replace(regex, "🦜"); 
+      wasDirty = true;
+    }
+  });
+
+  return { text: cleaned, dirty: wasDirty };
+}
+
+/* ================================================
+   ELEMENTS
+   ================================================ */
+const $=id=>document.getElementById(id);
+const elWord=$("word"),elBadge=$("badge"),elCtr=$("ctr");
+const elResLbl=$("resLbl"),elResWord=$("resWord"),elVerdict=$("verdict");
+const elMic=$("mic"),elDot=$("dot"),elFlash=$("flash");
+const elPv=$("pv"),elPIcon=$("pIcon");
+
+/* ================================================
+   BACKGROUND MOTES
+   ================================================ */
+(function(){
   const box=$("motes");
   for(let i=0;i<40;i++){
     const m=document.createElement("div");
@@ -498,56 +315,44 @@ const elFlash   = $("flash");
   }
 })();
 
-/* ========================================
-   SETUP — microphone permission
-   ======================================== */
-const setupEl=$("setup");
-const enableBtn=$("enableBtn");
-const setupErr=$("setupErr");
-
-enableBtn.onclick=async()=>{
-  enableBtn.textContent="Requesting…";
-  enableBtn.style.opacity=".6";
+/* ================================================
+   SETUP — mic permission
+   ================================================ */
+$("enableBtn").onclick=async()=>{
+  const btn=$("enableBtn");
+  btn.textContent="Requesting…";btn.style.opacity=".6";
   try{
-    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-    stream.getTracks().forEach(t=>t.stop());
+    const s=await navigator.mediaDevices.getUserMedia({audio:true});
+    s.getTracks().forEach(t=>t.stop());
     elDot.classList.add("ok");
-    setupEl.classList.add("gone");
+    $("setup").classList.add("gone");
   }catch(e){
-    setupErr.classList.add("show");
-    enableBtn.textContent="🎤  Try Again";
-    enableBtn.style.opacity="1";
+    $("setupErr").classList.add("show");
+    btn.textContent="🎤  Try Again";btn.style.opacity="1";
   }
 };
 
-/* auto-check if already granted */
 (async()=>{
   try{
-    const result=await navigator.permissions.query({name:"microphone"});
-    if(result.state==="granted"){
-      elDot.classList.add("ok");
-      setupEl.classList.add("gone");
-    }
+    const r=await navigator.permissions.query({name:"microphone"});
+    if(r.state==="granted"){elDot.classList.add("ok");$("setup").classList.add("gone")}
   }catch(e){}
 })();
 
-/* ========================================
+/* ================================================
    FILTERS
-   ======================================== */
+   ================================================ */
 const filtersEl=$("filters");
-const cats=[
+[
   {key:"all",label:"All",cls:"ff-all"},
   {key:"ear",label:"/ɪə/",cls:"ff-ear"},
   {key:"air",label:"/eə/",cls:"ff-air"},
   {key:"ure",label:"/ʊə/",cls:"ff-ure"},
   {key:"er", label:"/3:/", cls:"ff-er"}
-];
-
-cats.forEach(c=>{
+].forEach(c=>{
   const b=document.createElement("button");
   b.className="ff "+c.cls+(c.key==="all"?" on":"");
-  b.textContent=c.label;
-  b.dataset.key=c.key;
+  b.textContent=c.label;b.dataset.key=c.key;
   b.onclick=()=>pick(c.key);
   filtersEl.appendChild(b);
 });
@@ -556,12 +361,12 @@ function pick(key){
   filtersEl.querySelectorAll(".ff").forEach(b=>b.classList.remove("on"));
   filtersEl.querySelector(`[data-key="${key}"]`).classList.add("on");
   list=key==="all"?[...all]:all.filter(w=>w.cat===key);
-  idx=0; clr(); show();
+  idx=0;clr();show();
 }
 
-/* ========================================
+/* ================================================
    DISPLAY
-   ======================================== */
+   ================================================ */
 function show(){
   const item=list[idx];
   elWord.textContent=item.word;
@@ -573,10 +378,9 @@ function show(){
 
 function clr(){
   elResLbl.classList.remove("show");
-  elResWord.textContent="";
-  elResWord.style.color="";
-  elVerdict.className="verdict";
-  elVerdict.textContent="";
+  elResWord.textContent="";elResWord.style.color="";
+  elVerdict.className="verdict";elVerdict.textContent="";
+  elPv.classList.remove("on");
 }
 
 function next(){idx=(idx+1)%list.length;clr();show()}
@@ -593,17 +397,101 @@ $("prevBtn").onclick=prev;
 $("nextBtn").onclick=next;
 $("shufBtn").onclick=shuffle;
 
-/* ========================================
+/* ================================================
+   PARROT VOICE — High Quality AI Implementation
+   ================================================ */
+let voices = [];
+let isSpeaking = false;
+let lastHeard = "";
+
+function loadVoices() {
+  // Get all available system voices
+  voices = window.speechSynthesis.getVoices();
+}
+
+if (window.speechSynthesis) {
+  // Chrome/Edge load voices asynchronously
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+}
+
+function getBestVoice() {
+  // 1. Try to find Google UK English (High Quality)
+  let best = voices.find(v => v.name === 'Google UK English Female' || v.name === 'Google UK English Male');
+  
+  // 2. Try to find Microsoft "Natural" voices (if on Edge)
+  if (!best) best = voices.find(v => v.name.includes('Natural') && v.lang.includes('en-GB'));
+  
+  // 3. Fallback to any British English voice
+  if (!best) best = voices.find(v => v.lang === "en-GB");
+  
+  // 4. Final fallback to any English
+  if (!best) best = voices.find(v => v.lang.startsWith("en"));
+  
+  return best;
+}
+
+function parrotSpeak(text, times) {
+  // SAFETY CHECK: If the text contains the censor emoji or is in the list, stop.
+  if (censor(text).dirty || text.includes("🦜")) {
+      text = "I am a polite parrot"; // Or just return;
+  }
+    
+  times = times || 1;
+  if (!window.speechSynthesis || isSpeaking) return;
+
+  setSpeaking(true);
+  let count = 0;
+
+  function once() {
+    const utt = new SpeechSynthesisUtterance(text);
+    const v = getBestVoice();
+    
+    if (v) utt.voice = v;
+    
+    // AI VOICE TUNING:
+    // We lower the pitch slightly from your original 1.8. 
+    // High-quality AI voices sound "broken" if the pitch is too high.
+    // 1.1 - 1.2 gives it a "cute parrot" lift without losing the AI quality.
+    utt.pitch = 1.2; 
+    
+    // 0.85 is the "sweet spot" for Phonics - slow enough to hear 
+    // the phonemes but fast enough to sound natural.
+    utt.rate = 0.85; 
+    
+    // Volume boost
+    utt.volume = 1;
+
+    utt.onend = () => {
+      count++;
+      if (count < times) {
+        setTimeout(once, 600); // Small gap between repetitions
+      } else {
+        setSpeaking(false);
+      }
+    };
+    
+    utt.onerror = () => setSpeaking(false);
+    window.speechSynthesis.speak(utt);
+  }
+
+  once();
+}
+
+function setSpeaking(on) {
+  isSpeaking = on;
+  elPv.classList.toggle("on", on);
+  elMic.classList.toggle("off", on);
+  elPIcon.classList.toggle("talking", on);
+}
+
+/* ================================================
    SPEECH RECOGNITION
-   ======================================== */
+   ================================================ */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 
 if(!SR){
-  document.body.innerHTML=`
-    <div class="nope">
-      <h2>⚠️ Browser Not Supported</h2>
-      <p>Open this page in <b>Google Chrome</b>.</p>
-    </div>`;
+  document.body.innerHTML='<div class="nope"><h2>⚠️ Browser Not Supported</h2><p>Open this page in <b>Google Chrome</b>.</p></div>';
 }
 
 let rec;
@@ -614,17 +502,32 @@ if(SR){
   rec.lang="en-GB";
   rec.maxAlternatives=8;
 
-  rec.onresult=e=>{
-    const target=list[idx].word.toLowerCase();
-    let heard=e.results[0][0].transcript.trim().toLowerCase();
-    let match=false;
+rec.onresult = e => {
+    const target = list[idx].word.toLowerCase();
+    let rawHeard = e.results[0][0].transcript.trim().toLowerCase();
+    
+    // Check for bad words immediately
+    const censoredResult = censor(rawHeard);
+    let heard = censoredResult.text;
+    let match = false;
 
-    for(let i=0;i<e.results[0].length;i++){
-      const t=e.results[0][i].transcript.trim().toLowerCase();
-      const ws=t.split(/\s+/);
-      if(t===target||ws.includes(target)){match=true;heard=target;break}
+    // If the input was dirty, we force 'match' to false so they don't get a reward
+    if (!censoredResult.dirty) {
+      for (let i = 0; i < e.results[0].length; i++) {
+        const t = e.results[0][i].transcript.trim().toLowerCase();
+        const ws = t.split(/\s+/);
+        if (t === target || ws.includes(target)) {
+          match = true;
+          heard = target;
+          break;
+        }
+      }
+    } else {
+      // If it was dirty, the parrot gives a specific reaction
+      heard = "Squawk! 🦜"; 
     }
-    reveal(heard,match);
+
+    reveal(heard, match);
     micOff();
   };
 
@@ -640,6 +543,7 @@ if(SR){
 elMic.onclick=listen;
 
 function listen(){
+  if(isSpeaking) return;
   if(elMic.classList.contains("on")){rec.stop();return}
   clr();
   elMic.classList.add("on");
@@ -648,35 +552,55 @@ function listen(){
 
 function micOff(){elMic.classList.remove("on")}
 
-function reveal(heard,ok){
+/* ================================================
+   REVEAL RESULT
+   ================================================ */
+function reveal(heard, ok) {
   elResLbl.classList.add("show");
-  elResWord.textContent=heard;
+  
+  // Use the censored version for display
+  const censored = censor(heard);
+  const finalDisplay = censored.text;
+  
+  elResWord.textContent = finalDisplay;
+  lastHeard = finalDisplay;
 
-  if(ok){
-    elResWord.style.color="#2ec4b6";
-    elResWord.className="res-word pop";
+  if (ok) {
+    elResWord.style.color = "#2ec4b6";
+    elResWord.className = "res-word pop";
     elWord.classList.add("pop");
-    elVerdict.textContent="✅  Perfect!";
-    elVerdict.className="verdict yes show";
+    elVerdict.textContent = "✅  Perfect!";
+    elVerdict.className = "verdict yes show";
     celebrate();
     flash();
-  }else{
-    elResWord.style.color="#e94560";
-    elResWord.className="res-word shake";
+
+    // AUTO REPEAT logic moved here
+    if (idx === list.length - 1) {
+      setTimeout(() => parrotSpeak(finalDisplay, 2), 700);
+    }
+  } else {
+    elResWord.style.color = "#e94560";
+    elResWord.className = "res-word shake";
     elWord.classList.add("shake");
-    elVerdict.textContent="❌  Try again";
-    elVerdict.className="verdict no show";
+    
+    // Change verdict text if censored
+    if (censored.dirty || finalDisplay.includes("Squawk")) {
+      elVerdict.textContent = "🙊  Naughty Parrot!";
+    } else {
+      elVerdict.textContent = "❌  Try again";
+    }
+    elVerdict.className = "verdict no show";
   }
 
-  setTimeout(()=>{
-    elResWord.classList.remove("shake","pop");
-    elWord.classList.remove("shake","pop");
-  },450);
+  setTimeout(() => {
+    elResWord.classList.remove("shake", "pop");
+    elWord.classList.remove("shake", "pop");
+  }, 450);
 }
 
-/* ========================================
-   CELEBRATION EFFECTS
-   ======================================== */
+/* ================================================
+   CELEBRATION
+   ================================================ */
 function celebrate(){
   const emojis=["✨","⭐","🎉","💫","🦜","💚"];
   const box=$("confetti");
@@ -702,20 +626,26 @@ function flash(){
   setTimeout(()=>elFlash.classList.remove("go"),150);
 }
 
-/* ========================================
+/* ================================================
    KEYBOARD SHORTCUTS
-   ======================================== */
+   ================================================ */
 document.addEventListener("keydown",e=>{
   if(e.code==="Space"){e.preventDefault();listen()}
-  if(e.code==="ArrowRight")next();
-  if(e.code==="ArrowLeft")prev();
-  if(e.code==="KeyS")shuffle();
+  if(e.code==="ArrowRight") next();
+  if(e.code==="ArrowLeft") prev();
+  if(e.code==="KeyS") shuffle();
+
+  /* R = teacher-triggered repeat (once) */
+  if(e.code==="KeyR"&&lastHeard&&!isSpeaking){
+    parrotSpeak(lastHeard, 1);
+  }
 });
 
-/* ========================================
+/* ================================================
    INIT
-   ======================================== */
+   ================================================ */
 show();
+
 </script>
 </body>
 </html>
